@@ -1,0 +1,13 @@
+[package]
+name = "sudoku"
+version = "0.1.0"
+authors = ["gunnar <github@schmigu.de>"]
+edition = "2018"
+
+[lib]
+name = "sudoku"
+path = "src/lib.rs"
+
+[[bin]]
+name = "sudoku"
+path = "src/main.rs"
