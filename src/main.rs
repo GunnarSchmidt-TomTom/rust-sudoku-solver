@@ -1,9 +1,10 @@
 use sudoku::Sudoku;
-use std::env;
 use std::fs;
+use structopt::StructOpt;
+use std::path::Path;
 
-fn read_sudoku_from_file(filename : &String) -> Sudoku {
-    let contents = fs::read_to_string(filename).expect(&format!("Could not read {}", filename));
+fn read_sudoku_from_file(filename : &Path) -> Sudoku {
+    let contents = fs::read_to_string(filename).expect(&format!("Could not read {}", filename.to_str().expect("no path given")));
     let lines = contents.lines();
 
     let mut numbers : Vec<u8> = Vec::new();
@@ -33,9 +34,15 @@ fn read_sudoku_from_file(filename : &String) -> Sudoku {
     }
 }
 
+#[derive(StructOpt)]
+struct Cli {
+    #[structopt(parse(from_os_str))]
+    path: std::path::PathBuf,
+}
+
 fn main() {
-    let args : Vec<String> = env::args().collect();
-    let mut sudoku = read_sudoku_from_file(&args[1]);
+    let args = Cli::from_args();
+    let mut sudoku = read_sudoku_from_file(args.path.as_path());
 
     println!("Original Sudoku: {}", sudoku);
     sudoku.solve();

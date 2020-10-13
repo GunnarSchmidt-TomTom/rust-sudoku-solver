@@ -11,3 +11,6 @@ path = "src/lib.rs"
 [[bin]]
 name = "sudoku"
 path = "src/main.rs"
+
+[dependencies]
+structopt = "0.3.13"
